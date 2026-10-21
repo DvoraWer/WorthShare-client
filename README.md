@@ -1,75 +1,107 @@
-# React + TypeScript + Vite
+# WorthShare – Client
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**WorthShare** היא פלטפורמה לשיתוף המלצות: אתרים, מוצרים, טיפים וכלים שימושיים.
+משתמשים מפרסמים המלצות, מחפשים ומסננים, ושומרים מועדפים. כשיש למשתמש קשר מסחרי למוצר הוא מגיש **בקשת חסות** עם גילוי נאות, ומנהל המערכת מאשר אותה או דוחה.
 
-Currently, two official plugins are available:
+מאגר זה מכיל את צד הלקוח (React + TypeScript). צד השרת נמצא במאגר נפרד: `worthshare-server`.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## טכנולוגיות
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+| תחום | ספרייה |
+|---|---|
+| UI | React 19 + TypeScript |
+| כלי בנייה | Vite |
+| ניתוב | React Router 7 |
+| ניהול נתוני שרת | TanStack Query (React Query) |
+| ניהול משתמש מחובר | React Context |
+| טפסים וולידציה | React Hook Form + Yup |
+| קריאות HTTP | Axios |
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## פיצ'רים
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### משתמש רגיל
+- הרשמה, התחברות והתנתקות. החיבור נשמר גם אחרי רענון הדף.
+- רשימת המלצות עם **חיפוש**, **סינון לפי קטגוריה**, **מיון** ו**חלוקה לעמודים**.
+- הוספת המלצה ועריכתה.
+- **ההמלצות שלי:** צפייה בסטטוס של כל המלצה (פורסמה, ממתינה לאישור חסות, נדחתה, הוסרה), עריכה ומחיקה.
+- **בקשת חסות:** טופס גילוי נאות עם שם המממן, המוצר וסוג הקשר המסחרי.
+- **מועדפים:** סימון המלצות בלב ודף "המועדפים שלי".
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### מנהל מערכת
+- **בקשות חסות:** צפייה בפרטי הגילוי, אישור או דחייה עם סיבה.
+- **ניהול משתמשים:** חסימה ושחרור, מתן הרשאת מנהל והסרתה.
+- **ניהול קטגוריות:** הוספה, עריכה, הפעלה והשבתה.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+---
+
+## מבנה התיקיות
 
 ```
-
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+src/
+├── api/          קריאות לשרת (axios). קובץ לכל תחום
+├── components/   קומפוננטות משותפות: Layout, Navbar, כרטיס המלצה
+├── constants/    קבועים משותפים (תוויות לסוגי חסות)
+├── context/      UserContext: המשתמש המחובר ושחזור החיבור
+├── features/     טפסים (RHF + Yup)
+├── pages/        עמודי האפליקציה
+├── routes/       הגדרת הניתוב והגנה על עמודים (ProtectedRoute, AdminRoute)
+└── types/        טיפוסי TypeScript לנתונים שמגיעים מהשרת
 ```
+
+---
+
+## הרשאות וניתוב
+
+| נתיב | גישה |
+|---|---|
+| `/login`, `/register` | כולם |
+| `/home`, `/my-recommendations`, `/favorites`, `/recommendations/...` | משתמש מחובר |
+| `/admin/sponsorships`, `/admin/categories`, `/admin/users` | מנהל בלבד |
+
+- **`ProtectedRoute`:** משתמש שלא מחובר מועבר לדף ההתחברות.
+- **`AdminRoute`:** משתמש שאינו מנהל מועבר לדף הבית.
+
+---
+
+## הרצה מקומית
+
+### דרישות מקדימות
+- Node.js 20 ומעלה
+- שרת WorthShare פועל, מהמאגר `worthshare-server`
+
+### התקנה
+```bash
+npm install
+```
+
+### משתני סביבה
+יוצרים קובץ `.env` בתיקייה הראשית של הפרויקט:
+```
+VITE_API_BASE_URL=http://localhost:4000/api
+```
+
+### הרצה
+```bash
+npm run dev
+```
+האפליקציה תעלה בכתובת `http://localhost:5173`.
+
+### פקודות נוספות
+| פקודה | תיאור |
+|---|---|
+| `npm run build` | בדיקת טיפוסים ובניית גרסת production לתיקייה `dist` |
+| `npm run preview` | הרצה מקומית של גרסת ה-build |
+| `npm run lint` | בדיקת קוד עם ESLint |
+
+---
+
+## משתמשי דמו
+
+| תפקיד | אימייל | סיסמה |
+|---|---|---|
+| מנהל | `admin@example.com` | `AdminWorth323` |
+| משתמש | `dana.cohen@example.com` | `userWorth323` |

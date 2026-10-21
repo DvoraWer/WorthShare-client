@@ -5,7 +5,7 @@ import './index.css';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import router from './routes/routes';
-import { UserProvider } from './context/userContext';
+import { UserProvider } from './context/userProvider';
 const queryClient=new QueryClient();
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

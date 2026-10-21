@@ -1,25 +1,14 @@
 import {
-  createContext,
   useState,
   type ReactNode,
-  type Dispatch,
-  type SetStateAction,
   useEffect,
 } from 'react';
-
+import { UserContext } from './userContext'
 import axios from 'axios';
 
 import type { User } from '../types/auth';
 import { getMe } from '../api/authApi';
 
-interface UserContextType {
-  isLoading: boolean;
-setIsLoading: Dispatch<SetStateAction<boolean>>;
-  user: User | null;
-  setUser: Dispatch<SetStateAction<User | null>>;
-}
-
-export const UserContext = createContext<UserContextType | null>(null);
 interface UserProviderProps {
   children: ReactNode;
 }
