@@ -1,9 +1,9 @@
 
-import { useContext, useState, type SubmitEvent } from 'react';
+import { useState, type SubmitEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { login } from '../api/authApi';
-import { UserContext } from '../context/userContext';
+import useUser from '../hooks/useUser';
 
 function LoginForm() {
   const [email, setEmail] = useState('');
@@ -11,14 +11,8 @@ function LoginForm() {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
-  const context = useContext(UserContext);
+  const { setUser } = useUser();
   const navigate = useNavigate();
-
-  if (!context) {
-    throw new Error('LoginForm must be inside UserProvider');
-  }
-
-  const { setUser } = context;
 
   const handleSubmit = async (e: SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();

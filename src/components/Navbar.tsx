@@ -1,15 +1,9 @@
-import { useContext } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { UserContext } from "../context/userContext";
+import useUser from "../hooks/useUser";
 
 const Navbar = () => {
-  const context = useContext(UserContext);
+  const { user, setUser } = useUser();
   const navigate = useNavigate();
-  if (!context) {
-    throw new Error('Navbar must be inside UserProvider');
-  }
-
-  const { user, setUser } = context;
   const handleLogout = () => {
     localStorage.removeItem('accessToken');
     setUser(null);

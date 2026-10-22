@@ -1,14 +1,9 @@
-import { useContext } from "react";
-import { UserContext } from "../context/userContext";
 import { Navigate, Outlet } from "react-router-dom";
+import useUser from "../hooks/useUser";
 
 const ProtectedRoute=()=>
 {
-const context = useContext(UserContext);
-if(!context)
-    throw new Error('ProtectedRoute must be inside UserProvider');
-
-const { user, isLoading } = context;
+const { user, isLoading } = useUser();
 if(isLoading)
     return<p>טוען..</p>
 if(!user)

@@ -1,8 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { getUsers, updateUserRole, updateUserStatus } from "../api/adminApi"
-import { useContext } from "react";
 import axios from "axios";
-import { UserContext } from "../context/userContext";
+import useUser from "../hooks/useUser";
 import type { AdminUser } from "../types/auth";
 
 const UsersPage=()=>
@@ -12,10 +11,7 @@ const UsersPage=()=>
         queryKey:['admin','users'],
         queryFn:()=>getUsers()
     })
-     const context = useContext(UserContext);
-     if(!context)
-        throw new Error('UsersPage must be inside UserProvider');
-     const { user } = context;
+     const { user } = useUser();
 
      const handleSuccess=()=>
      {

@@ -1,5 +1,5 @@
 
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -7,7 +7,7 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import { register as registerUser } from '../api/authApi';
-import { UserContext } from '../context/userContext';
+import useUser from '../hooks/useUser';
 import type { RegisterRequest } from '../types/auth';
 
 const schema = yup.object({
@@ -18,7 +18,7 @@ const schema = yup.object({
 
 const RegisterForm = () => {
   const navigate = useNavigate();
-  const context = useContext(UserContext);
+  const { setUser } = useUser();
   const [serverError, setServerError] = useState('');
   const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<RegisterRequest>(
     {
@@ -32,11 +32,6 @@ const RegisterForm = () => {
       },
     });
 
-  if (!context) {
-    throw new Error('RegisterForm must be inside UserProvider');
-  }
-
-  const { setUser } = context;
   const onSubmit = async (data: RegisterRequest) => {
     setServerError('');
     try {

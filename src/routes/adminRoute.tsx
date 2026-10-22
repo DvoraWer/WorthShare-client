@@ -1,14 +1,9 @@
-import { useContext } from "react";
-import { UserContext } from "../context/userContext";
 import { Navigate, Outlet } from "react-router-dom";
+import useUser from "../hooks/useUser";
 
 const AdminRoute=()=>
 {
-const context = useContext(UserContext);
-if(!context)
-    throw new Error('AdminRoute must be inside UserProvider');
-
-const { user } = context;
+const { user } = useUser();
 if(user?.role!=='Admin')
      return <Navigate to="/home" replace/>
 return <Outlet/>
