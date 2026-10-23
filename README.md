@@ -5,6 +5,20 @@
 
 מאגר זה מכיל את צד הלקוח (React + TypeScript). צד השרת נמצא במאגר נפרד: `worthshare-server`.
 
+## 🌐 האתר החי
+
+**https://worth-share-client.vercel.app**
+
+| חלק | אחסון |
+|---|---|
+| צד לקוח | Vercel |
+| שרת API | Render – `https://worthshare-api.onrender.com/api` |
+| מסד נתונים | PostgreSQL ב-Neon |
+
+> השרת רץ בתוכנית החינמית של Render ו"נרדם" אחרי זמן ללא שימוש, לכן הפעולה הראשונה באתר (התחברות או טעינת המלצות) עשויה להימשך עד כחצי דקה. אחרי זה האתר מגיב כרגיל.
+
+פרטי ההתחברות לבדיקה נמצאים בסעיף [משתמשי דמו](#משתמשי-דמו).
+
 ---
 
 ## טכנולוגיות
@@ -120,7 +134,11 @@ npm run dev
 
 ## משתמשי דמו
 
-| תפקיד | אימייל | סיסמה |
-|---|---|---|
-| מנהל | `admin@example.com` | `AdminWorth323` |
-| משתמש | `dana.cohen@example.com` | `userWorth323` |
+המשתמשים האלה קיימים גם באתר החי וגם בהרצה מקומית אחרי `npm run db:seed` בשרת.
+
+| תפקיד | שם | אימייל | סיסמה |
+|---|---|---|---|
+| מנהל | WorthShare Admin | `admin@example.com` | `AdminWorth323` |
+| משתמש | דנה כהן | `dana.cohen@example.com` | `userWorth323` |
+| משתמש | יוסי לוי | `yossi.levi@example.com` | `userWorth323` |
+| משתמש | נועה מזרחי | `noa.mizrahi@example.com` | `userWorth323` |
