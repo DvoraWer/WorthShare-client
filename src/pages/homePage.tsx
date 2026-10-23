@@ -53,8 +53,8 @@ const toggleFavorite = (id: number, isFavorite: boolean) => {
     });
     if (isPending) return <p>טוען המלצות...</p>
     if (isError) return <p role="alert">לא הצלחנו לטעון את ההמלצות. נסה שוב מאוחר יותר.</p>
-    return <section>
-        <h1>ההמלצות שלנו--</h1>
+    return <section className="home-grid">
+        <h1 className="hero">ההמלצות שלנו--</h1>
 
         <label htmlFor="search">חיפוש</label>
         <input
@@ -101,7 +101,7 @@ const toggleFavorite = (id: number, isFavorite: boolean) => {
                     />
                 );
             })}
-            <div>
+            <div className="pagination">
                 <button type="button" onClick={()=>setPage(page-1)} disabled={page === 1}>הקודם</button>
                 <span>עמוד {page} מתוך {data.pagination.totalPages}</span>
                 <button type="button" onClick={()=>setPage(page+1)} disabled={page >= data.pagination.totalPages}>הבא</button>

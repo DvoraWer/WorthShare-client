@@ -1,111 +1,398 @@
-:root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+@import "tailwindcss";
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
+/* ============================================================
+   1. Design tokens
+   Every value here becomes a Tailwind utility automatically:
+   --color-teal  -> bg-teal / text-teal / border-teal
+   --font-display -> font-display
+   --radius-card -> rounded-card
+   --shadow-soft -> shadow-soft
+   ============================================================ */
+@theme {
+  --color-ink: #14283A;
+  --color-muted: #4A5C69;
+  --color-teal: #1E5F6C;
+  --color-teal-soft: #E2EEEF;
+  --color-plum: #7A2E5A;
+  --color-plum-soft: #F5E7EF;
+  --color-ember: #EE7A3B;
+  --color-ember-soft: #FDEDE2;
+  --color-ember-text: #97440F;
+  --color-saffron: #F7A84E;
+  --color-ground: #F2F4F5;
+  --color-line: #DCE3E6;
+  --color-danger: #B42335;
+  --color-danger-soft: #FBEAEC;
 
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
-  color: var(--text);
-  background: var(--bg);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  --font-sans: "Assistant", system-ui, sans-serif;
+  --font-display: "Rubik", system-ui, sans-serif;
 
-  @media (max-width: 1024px) {
+  --radius-field: 14px;
+  --radius-card: 20px;
+  --radius-panel: 24px;
+  --radius-hero: 28px;
+
+  --shadow-soft: 0 1px 2px rgb(20 40 58 / 0.05), 0 12px 30px -12px rgb(20 40 58 / 0.22);
+  --shadow-lift: 0 2px 4px rgb(20 40 58 / 0.06), 0 22px 44px -14px rgb(20 40 58 / 0.32);
+}
+
+/* ============================================================
+   2. Base: plain HTML elements get the design without any class
+   ============================================================ */
+@layer base {
+  body {
+    @apply bg-ground text-ink font-sans antialiased;
     font-size: 16px;
+    line-height: 1.6;
+  }
+
+  h1, h2, h3, h4 {
+    @apply font-display font-bold text-ink;
+    letter-spacing: -0.015em;
+    line-height: 1.15;
+  }
+  h1 { font-size: clamp(32px, 4.5vw, 52px); }
+  h2 { font-size: 28px; }
+  h3 { font-size: 22px; font-weight: 600; }
+
+  a { @apply text-teal transition-colors; }
+  a:hover { @apply text-plum; }
+
+  label { @apply font-bold; font-size: 14.5px; }
+
+  input:not([type="radio"]):not([type="checkbox"]),
+  select,
+  textarea {
+    @apply w-full bg-white text-ink border-[1.5px] border-line rounded-field transition;
+    min-height: 48px;
+    padding: 10px 16px;
+  }
+  input:not([type="radio"]):not([type="checkbox"]):hover,
+  select:hover,
+  textarea:hover { border-color: #B9C6CC; }
+  input:focus,
+  select:focus,
+  textarea:focus {
+    @apply outline-none border-teal;
+    box-shadow: 0 0 0 4px rgb(247 168 78 / 0.35);
+  }
+  input[type="radio"],
+  input[type="checkbox"] { @apply size-5 accent-plum; }
+  textarea { resize: vertical; }
+
+  /* Yup / server error messages (<p role="alert">) */
+  [role="alert"] { @apply text-danger font-semibold; font-size: 13.5px; }
+
+  /* Default button: neutral pill. Use the .btn classes below for colored ones. */
+  button {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-white text-ink font-semibold cursor-pointer transition;
+    min-height: 44px;
+    padding: 0 18px;
+    box-shadow: inset 0 0 0 1.5px var(--color-line);
+  }
+  button:hover { box-shadow: inset 0 0 0 1.5px var(--color-ink); }
+  button:disabled { @apply bg-[#EEF1F3] text-muted cursor-not-allowed; box-shadow: none; }
+
+  :focus-visible { outline: 3px solid var(--color-saffron); outline-offset: 2px; }
+
+  /* Tables (admin pages) */
+  th {
+    @apply text-start font-display font-medium text-muted border-b border-line;
+    background: #F7F9FA;
+    font-size: 13.5px;
+    padding: 14px 20px;
+  }
+  td { @apply border-b border-line align-middle; padding: 12px 20px; }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody tr:hover td { background: #FFF8F1; }
+
+  /* Page content inside Layout */
+  #root > main {
+    @apply mx-auto w-full max-w-[1248px] px-6 pb-20;
   }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
+/* ============================================================
+   3. Components: classes used in className
+   ============================================================ */
+@layer components {
+  /* ---- Navbar (Navbar.tsx) ---- */
+  .navbar {
+    @apply bg-ink text-[#CFD9DF] flex flex-wrap items-center gap-x-2 gap-y-2 py-3;
+    min-height: 76px;
+    padding-inline: max(24px, calc((100% - 1200px) / 2));
+  }
+  /* Logo drawn by CSS: two circles + the name (there is no logo element in the JSX) */
+  .navbar::before {
+    content: "";
+    order: -2;
+    @apply size-[22px] rounded-full bg-ember;
+    box-shadow: -10px 0 0 rgb(247 168 78 / 0.85);
+    margin-inline-end: 10px;
+  }
+  .navbar::after {
+    content: "WorthShare";
+    order: -1;
+    @apply font-display font-bold text-white;
+    font-size: 21px;
+    margin-inline-end: 20px;
+  }
+  .navbar a {
+    @apply inline-flex items-center rounded-full px-4 font-semibold text-[#CFD9DF] no-underline;
+    min-height: 44px;
+  }
+  .navbar a:hover { @apply text-white bg-white/10; }
+  .navbar a.active { @apply bg-saffron text-ink; } /* NavLink adds "active" by itself */
+  .navbar-greeting { order: 1; margin-inline-start: auto; font-size: 15px; }
+  .navbar button { order: 2; @apply bg-white/10 text-white; box-shadow: none; }
+  .navbar button:hover { @apply bg-white text-ink; box-shadow: none; }
+
+  /* ---- Colored page title with decorative circles (put on the page <h1>) ---- */
+  .hero {
+    @apply relative overflow-hidden rounded-hero bg-teal text-white my-6;
+    padding: 44px 48px 48px;
+  }
+  .hero::before,
+  .hero::after {
+    content: "";
+    @apply absolute rounded-full pointer-events-none;
+  }
+  .hero::before { @apply bg-saffron; width: 240px; height: 240px; left: -80px; top: -130px; }
+  .hero::after { @apply bg-ember; width: 110px; height: 110px; left: 150px; bottom: -70px; }
+  .hero-plum { @apply bg-plum; }
+  .hero-plum::before { @apply bg-ink/50; }
+  .hero-ember { @apply bg-ember text-ink; }
+  .hero-ember::after { @apply bg-plum; }
+  @media (max-width: 640px) {
+    .hero { padding: 32px 24px; }
   }
 
-  #social .button-icon {
-    filter: invert(1) brightness(2);
+  /* ---- Buttons (work on <button>, <a> and <Link>) ---- */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-teal text-white font-semibold no-underline cursor-pointer transition;
+    min-height: 46px;
+    padding: 0 24px;
+    box-shadow: 0 6px 16px -6px rgb(30 95 108 / 0.6);
   }
-}
+  .btn:hover { @apply -translate-y-0.5 text-white; box-shadow: 0 10px 22px -8px rgb(30 95 108 / 0.7); }
+  .btn-accent { @apply bg-ember text-ink; box-shadow: 0 6px 16px -6px rgb(238 122 59 / 0.7); }
+  .btn-accent:hover { @apply text-ink; box-shadow: 0 10px 22px -8px rgb(238 122 59 / 0.8); }
+  .btn-plum { @apply bg-plum; box-shadow: 0 6px 16px -6px rgb(122 46 90 / 0.6); }
+  .btn-plum:hover { box-shadow: 0 10px 22px -8px rgb(122 46 90 / 0.7); }
+  .btn-light { @apply bg-white text-ink; box-shadow: inset 0 0 0 1.5px var(--color-line); }
+  .btn-light:hover { @apply text-ink translate-y-0; box-shadow: inset 0 0 0 1.5px var(--color-ink); }
+  .btn-danger { @apply bg-danger-soft text-danger; box-shadow: none; }
+  .btn-danger:hover { @apply bg-danger text-white translate-y-0; box-shadow: none; }
+  .btn:disabled { @apply bg-[#E3E8EA] text-muted translate-y-0 cursor-not-allowed; box-shadow: none; }
 
-#root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
-}
+  /* ---- Layout helpers ---- */
+  .stack { @apply flex flex-col gap-6; }
+  .stack > .tabs { align-self: flex-start; }
+  .stack > .form.panel { max-width: 680px; }
 
-body {
-  margin: 0;
-}
+  .form-page { @apply mx-auto flex flex-col gap-6; max-width: 820px; }
+  .page-intro { @apply text-muted; font-size: 17px; }
 
-h1,
-h2 {
-  font-family: var(--heading);
-  font-weight: 500;
-  color: var(--text-h);
-}
+  .panel { @apply bg-white border border-line rounded-panel shadow-soft; padding: 32px; }
 
-h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
+  .empty-state {
+    @apply bg-white border border-line rounded-panel shadow-soft text-center mx-auto my-10;
+    max-width: 560px;
+    padding: 40px 32px;
+    font-size: 17px;
   }
-}
-h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
+
+  /* ---- Forms (loginForm, registerForm, recommendationForm, sponsorshipForm, categoryForm) ---- */
+  .form { @apply flex flex-col gap-6; }
+  .form > div { @apply flex flex-col gap-1.5; } /* each label + input + error group */
+  .form > .btn { align-self: flex-start; }
+
+  /* Login / register: the form is a centered card */
+  .auth-card {
+    @apply relative overflow-hidden bg-white border border-line rounded-panel shadow-soft mx-auto mt-16;
+    max-width: 440px;
+    padding: 40px 36px;
   }
-}
-p {
-  margin: 0;
-}
+  .auth-card::before {
+    content: "";
+    @apply absolute rounded-full bg-saffron pointer-events-none;
+    width: 140px; height: 140px; left: -60px; top: -70px;
+  }
+  .auth-card > * { @apply relative; }
+  .auth-card > .btn { @apply w-full; align-self: stretch; }
+  .auth-note { @apply text-center text-muted my-6; }
+  .auth-note a { @apply font-bold; }
 
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
-}
+  /* Split screen: #root turns into two columns only on pages that have an .auth-side */
+  #root:has(> .auth-side) {
+    @apply flex flex-col justify-center p-5;
+    min-height: 100vh;
+    padding-inline-start: calc(50% + 20px); /* the right half is kept for the panel */
+  }
+  /* the panel is pinned to the right half of the screen, always exactly the screen's height */
+  #root:has(> .auth-side) > .auth-side {
+    position: fixed;
+    top: 20px;
+    bottom: 20px;
+    inset-inline-start: 20px;
+    width: calc(50% - 30px);
+  }
+  /* the form + the note under it are centered in the left half */
+  #root:has(> .auth-side) > .auth-card { @apply w-full mx-auto my-0 gap-4; padding: 32px; }
+  #root:has(> .auth-side) > .auth-note { @apply my-4; }
+  @media (max-width: 900px) {
+    #root:has(> .auth-side) { justify-content: flex-start; padding-inline-start: 20px; }
+    #root:has(> .auth-side) > .auth-side { position: relative; inset: auto; width: auto; margin-bottom: 24px; }
+  }
 
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
+  /* The colored side panel (LoginPage / RegisterPage) */
+  .auth-side {
+    @apply relative overflow-hidden flex flex-col gap-4 bg-ink text-white;
+    border-radius: 32px;
+    padding: 44px clamp(24px, 5vw, 60px);
+    min-height: 320px;
+  }
+  .auth-side::before { /* logo */
+    content: "WorthShare";
+    @apply font-display font-bold text-white;
+    font-size: 21px;
+  }
+  .auth-side::after { /* three decorative circles made from one element */
+    content: "";
+    @apply absolute rounded-full bg-ember pointer-events-none;
+    width: 220px; height: 220px; left: 120px; bottom: 50px;
+    box-shadow: -150px 150px 0 80px var(--color-teal), 30px -260px 0 -55px var(--color-saffron);
+  }
+  .auth-side > * { @apply relative z-10; }
+  .auth-side h1 { @apply text-white mt-auto; font-size: clamp(40px, 5vw, 64px); line-height: 1.05; }
+  .auth-side h1 span { @apply text-saffron; }
+  .auth-side p {
+    @apply text-[#CFD9DF];
+    max-width: 460px;
+    font-size: 21px;
+    line-height: 1.6;
+    margin-bottom: clamp(40px, 14vh, 160px); /* lifts the heading + text up from the bottom */
+  }
+  .auth-side-teal { @apply bg-teal; }
+  .auth-side-teal::after { box-shadow: -150px 150px 0 80px var(--color-plum), 30px -260px 0 -55px var(--color-saffron); }
+  .auth-side-teal p { @apply text-[#D9E8EA]; }
+
+  /* ---- Recommendation card (recommendationCard.tsx) ---- */
+  .card {
+    @apply relative flex flex-col gap-2 bg-white border border-line rounded-card shadow-soft transition;
+    padding: 20px;
+  }
+  .card:hover { @apply -translate-y-1 shadow-lift; }
+  .card > h3 { padding-inline-end: 52px; } /* room for the heart */
+  .card > p:not([class]) { @apply text-muted; }
+  .card > .chip-sponsored,
+  .card > .chip-category { align-self: flex-start; }
+  .card > a { @apply font-bold no-underline inline-flex items-center self-start; min-height: 44px; }
+  .card-meta { @apply text-muted border-t border-line mt-auto pt-3; font-size: 14.5px; }
+
+  .heart {
+    @apply absolute size-11 rounded-full bg-[#F1F4F5] p-0;
+    top: 16px;
+    left: 16px;
+    min-height: 0;
+    font-size: 18px;
+    box-shadow: none;
+  }
+  .heart:hover { @apply bg-ember-soft scale-110; box-shadow: none; }
+
+  /* ---- Card grids ---- */
+  .cards-grid {
+    @apply grid gap-7;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  }
+  .cards-grid > :not(.card) { grid-column: 1 / -1; }
+
+  /* Home page: filters (label + field x3) in one row, cards three per row */
+  .home-grid {
+    @apply grid items-center gap-x-3 gap-y-7;
+    grid-template-columns: repeat(3, auto minmax(0, 1fr));
+  }
+  .home-grid > h1,
+  .home-grid > p,
+  .home-grid > .pagination { grid-column: 1 / -1; }
+  .home-grid > .card { grid-column: span 2; align-self: stretch; }
+  @media (max-width: 900px) {
+    .home-grid { grid-template-columns: auto minmax(0, 1fr); }
+  }
+
+  .pagination { @apply flex flex-wrap items-center justify-center gap-4 mt-6; }
+  .pagination > span { @apply bg-white border border-line rounded-full font-bold; padding: 8px 20px; }
+
+  /* ---- My recommendations (MyRecommendationsPage.tsx) ---- */
+  .my-rec {
+    @apply flex flex-wrap items-center gap-3 bg-white border border-line rounded-card shadow-soft;
+    padding: 20px 24px;
+  }
+  .my-rec > .card {
+    @apply basis-full border-0 shadow-none p-0;
+  }
+  .my-rec > .card:hover { @apply translate-y-0 shadow-none; }
+  .my-rec > strong { @apply basis-full text-muted; }
+  .rejection-reason {
+    @apply basis-full bg-danger-soft rounded-field;
+    padding: 10px 16px;
+  }
+
+  /* ---- Chips / tags ---- */
+  .chip,
+  .chip-category, .chip-sponsored,
+  .status-Published, .status-PendingSponsoredApproval, .status-Rejected, .status-Removed {
+    @apply inline-flex items-center gap-1.5 rounded-full font-bold bg-teal-soft text-teal;
+    padding: 4px 12px;
+    font-size: 13px;
+    line-height: 1.4;
+  }
+  .chip-category { @apply bg-[#EEF1F3] text-ink; }
+  .chip-sponsored { @apply bg-plum-soft text-plum; }
+
+  /* Status chips get a dot before the text */
+  .status-Published::before, .status-PendingSponsoredApproval::before,
+  .status-Rejected::before, .status-Removed::before {
+    content: "";
+    @apply size-[7px] rounded-full bg-current;
+  }
+  /* .status-* names match OwnerRecommendation['status'] values */
+  .status-PendingSponsoredApproval { @apply bg-ember-soft text-ember-text; }
+  .status-Rejected { @apply bg-danger-soft text-danger; }
+  .status-Removed { @apply bg-[#E6EAEC] text-muted; }
+
+  /* ---- Admin ---- */
+  .tabs { @apply inline-flex flex-wrap gap-1 rounded-full bg-plum p-1.5; }
+  .tabs a {
+    @apply inline-flex items-center rounded-full px-5 font-semibold no-underline text-[#F1DCE8];
+    min-height: 44px;
+  }
+  .tabs a:hover { @apply text-white; }
+  .tabs a.active { @apply bg-white text-plum; }
+
+  /* Sponsorship request card (sponsorshipPage.tsx) */
+  .panel > .btn { @apply mt-4; margin-inline-end: 12px; }
+  .disclosure { @apply grid gap-2.5 my-3; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
+  .disclosure > p { @apply bg-plum-soft rounded-field font-semibold; padding: 12px 16px; }
+
+  /* Rounded table that scrolls sideways on small screens */
+  .data-table {
+    @apply w-full bg-white border border-line rounded-panel shadow-soft overflow-hidden;
+    border-collapse: separate;
+    border-spacing: 0;
+  }
+  .data-table td button { margin-inline-end: 8px; }
+
+  /* Active / inactive status cell (categoriesPage, usersPage): colored dot + text, stays a real table cell */
+  .cell-on, .cell-off { @apply font-bold whitespace-nowrap; }
+  .cell-on { @apply text-teal; }
+  .cell-off { @apply text-danger; }
+  .cell-on::before, .cell-off::before {
+    content: "";
+    @apply inline-block size-2 rounded-full bg-current align-middle;
+    margin-inline-end: 8px;
+  }
+  @media (max-width: 760px) {
+    .data-table { @apply block overflow-x-auto; }
+  }
 }

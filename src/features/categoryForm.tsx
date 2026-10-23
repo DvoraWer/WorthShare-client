@@ -24,7 +24,7 @@ const CategoryForm=({onSubmit,defaultValues,isSubmitting,submitLabel,onCancel}:C
     });
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)} noValidate>
+        <form className="form panel" onSubmit={handleSubmit(onSubmit)} noValidate>
             <div>
                 <label htmlFor="name">שם הקטגוריה</label>
                 <input id="name" type="text" {...register('name')} />
@@ -37,7 +37,7 @@ const CategoryForm=({onSubmit,defaultValues,isSubmitting,submitLabel,onCancel}:C
                 {errors.description && <p role="alert">{errors.description.message}</p>}
             </div>
 
-            <button type="submit" disabled={isSubmitting}>{submitLabel}</button>
+            <button className="btn btn-accent" type="submit" disabled={isSubmitting}>{submitLabel}</button>
             {onCancel && <button type="button" onClick={onCancel}>ביטול</button>}
         </form>
     );

@@ -31,7 +31,7 @@ const SponsorshipForm=({ onSubmit, defaultValues, isSubmitting, submitLabel }:Sp
     });
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)} noValidate>
+        <form className="form panel" onSubmit={handleSubmit(onSubmit)} noValidate>
             <div>
                 <label htmlFor="sponsorName">שם היצרן או המותג</label>
                 <input id="sponsorName" type="text" {...register('sponsorName')} />
@@ -61,7 +61,7 @@ const SponsorshipForm=({ onSubmit, defaultValues, isSubmitting, submitLabel }:Sp
                 {errors.disclosureDetails && <p role="alert">{errors.disclosureDetails.message}</p>}
             </div>
 
-            <button type="submit" disabled={isSubmitting}>{submitLabel}</button>
+            <button className="btn btn-plum" type="submit" disabled={isSubmitting}>{submitLabel}</button>
         </form>
     );
 }

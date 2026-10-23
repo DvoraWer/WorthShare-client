@@ -15,8 +15,8 @@ const AddRecommendationPage = () => {
     });
 
     return (
-        <section>
-            <h1>הוספת המלצה</h1>
+        <section className="form-page">
+            <h1 className="hero">הוספת המלצה</h1>
             <RecommendationForm
                 onSubmit={(data) => mutation.mutate(data)}
                 isSubmitting={mutation.isPending}

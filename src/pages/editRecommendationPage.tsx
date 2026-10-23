@@ -27,8 +27,8 @@ const EditRecommendationPage=()=>
     if (isError) return <p role="alert">לא הצלחנו לטעון את ההמלצה. נסו שוב מאוחר יותר.</p>
     if (!rec) return <p>ההמלצה לא נמצאה.</p>
     return (
-        <section>
-            <h1>עריכת המלצה</h1>
+        <section className="form-page">
+            <h1 className="hero">עריכת המלצה</h1>
             <RecommendationForm
                 defaultValues={{
                     title: rec.title,

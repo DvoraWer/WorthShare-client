@@ -28,9 +28,9 @@ const RequestSponsorshipPage=()=>
     if (!rec) return <p>ההמלצה לא נמצאה.</p>
 
     return (
-          <section>
-            <h1> בקשה לאישור חסות</h1>
-            <p>
+          <section className="form-page">
+            <h1 className="hero hero-plum"> בקשה לאישור חסות</h1>
+            <p className="page-intro">
                 יש לך קשר מסחרי למוצר שעליו אתה ממליץ? מלא את הפרטים.
                 ההמלצה תוסתר עד לאישור מנהל, ואחריו תסומן כ"ממומנת".
             </p>

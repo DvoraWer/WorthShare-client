@@ -46,7 +46,7 @@ const UsersPage=()=>
         return <p role="alert">אירעה שגיאה, נסה שוב</p>
 
     return(
-<table>
+<table className="data-table">
   <thead>
     <tr> <th>שם</th> <th>אימייל</th> <th>תפקיד</th> <th>סטטוס</th> <th>פעולות</th> </tr>
   </thead>
@@ -56,7 +56,7 @@ const UsersPage=()=>
         <td>{u.fullName}</td>
         <td>{u.email}</td>
         <td>{u.role==='Admin'?"מנהל":"משתמש רגיל"}</td>
-        <td>{u.isActive?"פעיל":"חסום"}</td>
+        <td className={u.isActive ? 'cell-on' : 'cell-off'}>{u.isActive?"פעיל":"חסום"}</td>
         <td>
           {u.id===user?.id ? (
             <span>(את/ה)</span>

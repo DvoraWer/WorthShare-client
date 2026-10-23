@@ -35,23 +35,23 @@ const {data,isPending,isError}=useQuery(
     if(isError)
         return <p role="alert">אירעה שגיאה, נסה שנית</p>
     if(data.items.length===0)
-        return <p>אין לך עדיין המלצות <Link to={'/recommendations/new'}>לחץ כאן להוספת המלצה חדשה</Link></p>
+        return <p className="empty-state">אין לך עדיין המלצות <Link to={'/recommendations/new'}>לחץ כאן להוספת המלצה חדשה</Link></p>
     return(
-        <section>
-            <h1>ההמלצות שלי</h1>
+        <section className="stack">
+            <h1 className="hero">ההמלצות שלי</h1>
             {data.items.map((rec)=>(
-                <div key={rec.id}>
+                <div className="my-rec" key={rec.id}>
                     <RecommendationCard recommendation={rec}/>
-                    <p>סטטוס: {STATUS_LABELS[rec.status]}</p>
+                    <p className={`status-${rec.status}`}>סטטוס: {STATUS_LABELS[rec.status]}</p>
                     {rec.status === 'Rejected' && rec.rejectionReason && (
-                        <p>סיבת הדחייה: {rec.rejectionReason}</p>
+                        <p className="rejection-reason">סיבת הדחייה: {rec.rejectionReason}</p>
                     )}
                     {rec.status!=='Removed'&& (
                         <>
-                            <button type="button" disabled={deleteMutation.isPending} onClick={()=>handleDelete(rec.id)}>מחיקה</button>
-                            <Link to={`/recommendations/${rec.id}/edit`}>עריכה</Link>
+                            <button className="btn btn-danger" type="button" disabled={deleteMutation.isPending} onClick={()=>handleDelete(rec.id)}>מחיקה</button>
+                            <Link className="btn btn-light" to={`/recommendations/${rec.id}/edit`}>עריכה</Link>
                             {!rec.isSponsored && (
-                                <Link to={`/recommendations/${rec.id}/sponsorship`}>
+                                <Link className="btn btn-plum" to={`/recommendations/${rec.id}/sponsorship`}>
                                     {rec.status === 'PendingSponsoredApproval' ? 'עדכון פרטי גילוי' : 'בקשת חסות'}
                                 </Link>
                             )}

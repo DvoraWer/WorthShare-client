@@ -58,23 +58,23 @@ const SponsorshipPage=()=>
         return <p>אין בקשות ממתינות</p>
 
     return (
-        <section>
+        <section className="stack">
             <h2>בקשות חסות</h2>
             {data.items.map((rec) => (
-                <article key={rec.id}>
+                <article className="panel" key={rec.id}>
                         <h3>{rec.title}</h3>
                         <p>{rec.author.fullName} · {rec.category.name}</p>
                         <p>{rec.description}</p>
                         {rec.disclosure&&(
-                            <div>
+                            <div className="disclosure">
                                 <p>מממן: {rec.disclosure.sponsorName}</p>
                                 <p>מוצר: {rec.disclosure.productName}</p>
                                 <p>סוג: {SPONSORSHIP_TYPE_LABELS[rec.disclosure.sponsorshipType]}</p>
                                 {rec.disclosure.disclosureDetails && <p>פרטים נוספים: {rec.disclosure.disclosureDetails}</p>}
                             </div>
                         )}
-                        <button type="button" onClick={() => approveMutation.mutate(rec)} disabled={isBusy}>אישור</button>
-                        <button type="button" onClick={() => handleReject(rec)} disabled={isBusy}>דחייה</button>
+                        <button className="btn" type="button" onClick={() => approveMutation.mutate(rec)} disabled={isBusy}>אישור</button>
+                        <button className="btn btn-danger" type="button" onClick={() => handleReject(rec)} disabled={isBusy}>דחייה</button>
                 </article>
             ))}
         </section>

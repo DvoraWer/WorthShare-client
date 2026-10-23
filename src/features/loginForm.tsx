@@ -36,7 +36,7 @@ function LoginForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className="form auth-card" onSubmit={handleSubmit}>
       <h2>התחברות</h2>
 
       <div>
@@ -71,7 +71,7 @@ function LoginForm() {
         <p role="alert">{errorMessage}</p>
       )}
 
-      <button type="submit" disabled={isLoading}>
+      <button className="btn" type="submit" disabled={isLoading}>
         {isLoading ? 'מתחבר...' : 'התחברות'}
       </button>
     </form>

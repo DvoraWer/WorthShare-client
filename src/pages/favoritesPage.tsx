@@ -22,10 +22,10 @@ const {data,isPending,isError}=useQuery(
     if(isError)
         return <p role="alert">אירעה שגיאה, נסה שוב</p>
     if(data.items.length===0)
-        return <p>עוד לא שמרת המלצות למועדפים. <Link to="/home">לכל ההמלצות</Link></p>
+        return <p className="empty-state">עוד לא שמרת המלצות למועדפים. <Link to="/home">לכל ההמלצות</Link></p>
     return (
-        <section>
-            <h1>המועדפים שלי</h1>
+        <section className="cards-grid">
+            <h1 className="hero hero-ember">המועדפים שלי</h1>
             {data.items.map((rec) => (
                 <RecommendationCard
                     key={rec.id}

@@ -30,7 +30,7 @@ const RecommendationForm = ({ onSubmit, defaultValues, isSubmitting, submitLabel
     });
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)} noValidate>
+        <form className="form panel" onSubmit={handleSubmit(onSubmit)} noValidate>
             <div>
                 <label htmlFor="title">כותרת</label>
                 <input id="title" type="text" {...register('title')} />
@@ -60,7 +60,7 @@ const RecommendationForm = ({ onSubmit, defaultValues, isSubmitting, submitLabel
                 {errors.url && <p role="alert">{errors.url.message}</p>}
             </div>
 
-            <button type="submit" disabled={isSubmitting}>{submitLabel}</button>
+            <button className="btn btn-accent" type="submit" disabled={isSubmitting}>{submitLabel}</button>
         </form>
     );
 }

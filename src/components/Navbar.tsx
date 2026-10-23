@@ -11,8 +11,8 @@ const Navbar = () => {
   };
 
   return (
-    <nav>
-      <span>שלום, {user?.fullName}</span>
+    <nav className="navbar">
+      <span className="navbar-greeting">שלום, {user?.fullName}</span>
       <NavLink to="/home">בית</NavLink>
       <NavLink to="/my-recommendations">ההמלצות שלי</NavLink>
       <NavLink to="/favorites">המועדפים שלי</NavLink>

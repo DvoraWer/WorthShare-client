@@ -10,13 +10,15 @@ interface RecommendationCardProps
 const RecommendationCard=({ recommendation, isFavorite, onToggleFavorite }:RecommendationCardProps)=>
 {
 return(
-    <article>
-        {recommendation.isSponsored && <span>המלצה ממומנת</span>}
+    <article className="card">
+        {recommendation.isSponsored && <span className="chip-sponsored">המלצה ממומנת</span>}
         <h3>{recommendation.title}</h3>
-        <p>{recommendation.category.name}</p>
+        <p className="chip-category">{recommendation.category.name}</p>
         <p>{recommendation.description}</p>
 {onToggleFavorite && (
     <button
+        className="heart"
+        aria-label={isFavorite ? 'הסרה מהמועדפים' : 'הוספה למועדפים'}
         type="button"
         onClick={onToggleFavorite}
     >
@@ -30,7 +32,7 @@ return(
             </a>
         )}
 
-        <p>
+        <p className="card-meta">
             שם הממליץ: {recommendation.author.fullName}
             {' · '}
             {new Date(recommendation.createdAt).toLocaleDateString('he-IL')}

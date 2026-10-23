@@ -56,11 +56,11 @@ const {data,isPending,isError}=useQuery({
     if(isError)
         return <p role="alert">אירעה שגיאה, נסה שוב</p>
 return(
-    <section>
+    <section className="stack">
         <h2>{editing?'עריכת קטגוריה':'הוספת קטגוריה'}</h2>
         <CategoryForm key={editing?.id??'new'} onSubmit={handleSubmit} defaultValues={editing ? { name: editing.name, description: editing.description ?? '' } : undefined} isSubmitting={isBusy} submitLabel={editing?'שמירה':'הוספה'} onCancel={editing?()=>setEditing(null):undefined}/>
 
-        <table>
+        <table className="data-table">
           <thead>
             <tr> <th>שם</th> <th>תיאור</th> <th>סטטוס</th> <th>פעולות</th> </tr>
           </thead>
@@ -69,7 +69,7 @@ return(
               <tr key={c.id}>
                 <td>{c.name}</td>
                 <td>{c.description ?? '—'}</td>
-                <td>{c.isActive ? 'פעילה' : 'מושבתת'}</td>
+                <td className={c.isActive ? 'cell-on' : 'cell-off'}>{c.isActive ? 'פעילה' : 'מושבתת'}</td>
                 <td>
                   <button type="button" onClick={()=>setEditing(c)} disabled={isBusy}>עריכה</button>
                   <button type="button" onClick={()=>statusMutation.mutate(c)} disabled={isBusy}>{c.isActive?'השבתה':'הפעלה'}</button>

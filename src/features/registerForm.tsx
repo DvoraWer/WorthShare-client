@@ -53,7 +53,7 @@ const RegisterForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} noValidate>
+    <form className="form auth-card" onSubmit={handleSubmit(onSubmit)} noValidate>
       <h2>הרשמה ל-WorthShare</h2>
       <div>
         <label htmlFor="fullName">שם מלא</label>
@@ -96,7 +96,7 @@ const RegisterForm = () => {
         <p role="alert">{serverError}</p>
       )}
 
-      <button type="submit" disabled={isSubmitting}>
+      <button className="btn" type="submit" disabled={isSubmitting}>
         {isSubmitting ? 'בתהליך הרשמה...' : 'יצירת חשבון'}
       </button>
     </form>
