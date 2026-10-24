@@ -14,7 +14,7 @@ return(
         {recommendation.isSponsored && <span className="chip-sponsored">המלצה ממומנת</span>}
         <h3>{recommendation.title}</h3>
         <p className="chip-category">{recommendation.category.name}</p>
-        <p>{recommendation.description}</p>
+        <p className="card-text">{recommendation.description}</p>
 {onToggleFavorite && (
     <button
         className="heart"
@@ -33,9 +33,10 @@ return(
         )}
 
         <p className="card-meta">
-            שם הממליץ: {recommendation.author.fullName}
-            {' · '}
-            {new Date(recommendation.createdAt).toLocaleDateString('he-IL')}
+            <span>שם הממליץ: <strong>{recommendation.author.fullName}</strong></span>
+            <time dateTime={recommendation.createdAt}>
+                {new Date(recommendation.createdAt).toLocaleDateString('he-IL')}
+            </time>
         </p>
     </article>
 )
