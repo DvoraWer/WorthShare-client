@@ -10,7 +10,6 @@ const AddRecommendationPage = () => {
         mutationFn: createRecommendation,
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['recommendations'] });
-            navigate('/home');
         },
     });
 
@@ -18,9 +17,12 @@ const AddRecommendationPage = () => {
         <section className="form-page">
             <h1 className="hero">הוספת המלצה</h1>
             <RecommendationForm
-                onSubmit={(data) => mutation.mutate(data)}
+                onSubmit={(data, wantsSponsorship) => mutation.mutate(data, {
+                    onSuccess: (rec) => navigate(wantsSponsorship ? `/recommendations/${rec.id}/sponsorship` : '/home'),
+                })}
                 isSubmitting={mutation.isPending}
                 submitLabel="הוספה"
+                showSponsorshipOption
             />
             {mutation.isError && (
                 <p role="alert">לא הצלחנו לשמור את ההמלצה. בדקו את הפרטים ונסו שוב.</p>

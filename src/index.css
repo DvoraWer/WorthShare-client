@@ -206,6 +206,9 @@
   .form { @apply flex flex-col gap-6; }
   .form > div { @apply flex flex-col gap-1.5; } /* each label + input + error group */
   .form > .btn { align-self: flex-start; }
+  /* Checkbox + its text in one row (recommendationForm) */
+  .checkbox-field { @apply flex items-center gap-3 cursor-pointer self-start; min-height: 44px; }
+  .field-hint { @apply text-muted; font-size: 13.5px; }
 
   /* Login / register: the form is a centered card */
   .auth-card {

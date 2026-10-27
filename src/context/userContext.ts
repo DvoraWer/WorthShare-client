@@ -8,7 +8,7 @@ import type { User } from '../types/auth';
 
 interface UserContextType {
   isLoading: boolean;
-setIsLoading: Dispatch<SetStateAction<boolean>>;
+  setIsLoading: Dispatch<SetStateAction<boolean>>;
   user: User | null;
   setUser: Dispatch<SetStateAction<User | null>>;
 }
